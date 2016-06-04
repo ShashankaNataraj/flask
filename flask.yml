@@ -2,24 +2,26 @@
 - name: install and configure nginx
   hosts: flask
   remote_user: ubuntu
+  become: yes
+  become_method: sudo
 
 
   roles:
     - nginx
 
-- name: install and configure flask
-  hosts: flask
-  remote_user: ubuntu
-
-
-  roles:
-    - flask
-
-- name: Deploys flask app from Github
-  hosts: flask
-  remote_user: ubuntu
-
-
-  roles:
-    - flaskapp
-
+#- name: install and configure flask
+#  hosts: flask
+#  remote_user: ubuntu
+#
+#
+#  roles:
+#    - flask
+#
+#- name: Deploys flask app from Github
+#  hosts: flask
+#  remote_user: ubuntu
+#
+#
+#  roles:
+#    - flaskapp
+#
