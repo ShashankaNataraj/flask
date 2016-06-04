@@ -6,6 +6,7 @@ connect.
 
 Example: ~/.ssh/terraform.pub
 DESCRIPTION
+  default = "~/.ssh/kwongb-aws.pub"
 }
 
 variable "aws_credentials_file" {
@@ -16,10 +17,12 @@ See https://blogs.aws.amazon.com/security/post/Tx3D6U6WSFGOK2H/A-New-and-Standar
 
 Example: /Users/user/.aws/credentials
 DESCRIPTION
+  default = "/Users/tuppa/.aws/credentials"
 }
 
 variable "key_name" {
   description = "Desired name of AWS key pair"
+  default = "flask"
 }
 
 variable "aws_region" {

@@ -29,36 +29,35 @@ resource "aws_subnet" "default" {
   map_public_ip_on_launch = true
 }
 
-# Our default security group to access
-# the instances over SSH and HTTP
-resource "aws_security_group" "default" {
+resource "aws_security_group" "flasksg" {
   name        = "flask"
   description = "Flask instance default SG"
   vpc_id      = "${aws_vpc.default.id}"
 
-  # SSH access from anywhere
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # HTTP access from the VPC
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # outbound internet access
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_security_group_rule" "sg_allow_ssh" {
+  type = "ingress"
+  from_port   = 22
+  to_port     = 22
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.flasksg.id}"
+}
+
+resource "aws_security_group_rule" "sg_allow_http" {
+  type = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = "${aws_security_group.flasksg.id}"
 }
 
 
@@ -92,7 +91,7 @@ resource "aws_instance" "flask" {
   key_name = "${aws_key_pair.auth.id}"
 
   # Our Security group to allow HTTP and SSH access
-  vpc_security_group_ids = ["${aws_security_group.default.id}"]
+  vpc_security_group_ids = ["${aws_security_group.flasksg.id}"]
 
   subnet_id = "${aws_subnet.default.id}"
 
