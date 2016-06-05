@@ -1,0 +1,8 @@
+# Common parameters
+app_name: "flaskapp"
+app_user: www-data
+app_directory: "/opt/{{ app_name }}"
+app_log_directory: "/var/log/{{ app_name }}"
+port: 5000
+nginx_static_dir: "{{ app_directory }}/static"
+
