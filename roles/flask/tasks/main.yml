@@ -1,4 +1,6 @@
 ---
+- include: setup.yml
 
-- name: Install flask
-  apt: name=python-flask state=present 
+- include: nginx.yml
+
+- include: deployapp.yml
