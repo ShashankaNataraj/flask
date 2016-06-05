@@ -2,16 +2,18 @@
 
 - name: ensure log directory
   file: dest=/var/log/nginx state=directory
-  notify: restart nginx
 
 - name: disable default site
   file: dest=/etc/nginx/sites-enabled/default state=absent
-  notify: restart nginx
+  notify: 
+    - restart nginx
 
 - name: Create nginx virtual host for application
   template: src=nginx.conf.j2 dest=/etc/nginx/sites-available/{{ app_name }}
-  notify: restart nginx
+  notify: 
+    - restart nginx
 
 - name: Enable virtual host
   file: src=/etc/nginx/sites-available/{{ app_name }} dest=/etc/nginx/sites-enabled/{{ app_name }} state=link
-  notify: restart nginx
+  notify: 
+    - restart nginx

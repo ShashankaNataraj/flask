@@ -5,4 +5,5 @@ app_directory: "/opt/{{ app_name }}"
 app_log_directory: "/var/log/{{ app_name }}"
 port: 5000
 nginx_static_dir: "{{ app_directory }}/static"
-
+app_repo: https://github.com/tuppa/flaskapp.git  
+app_module: hello:app
