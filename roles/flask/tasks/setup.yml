@@ -7,7 +7,7 @@
   user: name={{ app_user }} group={{ app_user }} createhome=no
 
 - name: Ensure app directory
-  file: dest={{ app_directory }} state=directory
+  file: dest={{ app_directory }} state=directory owner={{ app_user }} group={{ app_user }}
 
 - name: Ensure app log directory
-  file: dest={{ app_log_directory }} state=directory
+  file: dest={{ app_log_directory }} state=directory owner={{ app_user}} group={{ app_user }}

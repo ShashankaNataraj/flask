@@ -16,7 +16,7 @@ terraform apply
 
 * Run ansible
 ```
-ansible-playbook -i hosts flask.yml
+ANSIBLE_SSH_PIPELINING=1 ansible-playbook -i hosts flask.yml
 ```
 
 # To test

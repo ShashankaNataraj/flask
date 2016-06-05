@@ -9,5 +9,12 @@
 - name: git clone app
   git: repo={{ app_repo }} dest={{ app_directory }} accept_hostkey=true force=yes
 
+- name: kill existing app
+  command: pkill gunicorn
+  ignore_errors: yes
+
 - name: start app 
-  command: gunicorn {{ app_module }} -D -b localhost:{{ port }} chdir={{ app_directory }}
+  command: gunicorn {{ app_module }} --access-logfile {{ app_log_directory }}/access.log --error-logfile {{app_log_directory }}/error.log -D -b localhost:{{ port }} chdir={{ app_directory }}
+  become: yes
+  become_user: www-data
+  notify: restart nginx
